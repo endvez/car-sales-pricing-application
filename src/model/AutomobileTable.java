@@ -5,14 +5,11 @@ import java.io.Serializable;
 
 import exception.AutoException;
 
-/** @class AutomobileTable
- *        Keeps a hash table of all automobile objects. \n
- *        This is essentially our database to manage our automobiles. **/
+
 public class AutomobileTable implements Serializable {
 	private static final long serialVersionUID = -6524925073605314987L;
 	private Map<String, Automobile> automobileTable;
 
-	/* constructors */
 	public AutomobileTable() {
 		automobileTable = new LinkedHashMap<String, Automobile>(64);
 	}
@@ -25,19 +22,13 @@ public class AutomobileTable implements Serializable {
 		return automobileTable.get(automobileKey);
 	}
 
-	/** get the hash table key for an automobile object. \n
-	 * key is a combination of Make, Model, and Year.
-	 * @return the key string
-	 * @throws AutoException **/
+	
 	public String getKey(Automobile automobileObject) throws AutoException {
 		if (automobileObject == null)
-			// Automobile could not be found in database
 			throw new exception.AutoException(502);
 		return automobileObject.getMake() + "-" + automobileObject.getModel() + "-" + automobileObject.getYear();
 	}
 
-	/** Gets the map iterator allowing one to traverse the map.
-	 * @return The map iterator */
 	public Iterator<Map.Entry<String, Automobile>> getIterator() {
 		return automobileTable.entrySet().iterator();
 	}
@@ -57,10 +48,7 @@ public class AutomobileTable implements Serializable {
 		return automobileDirectory;
 	}
 
-	/** Inserts an automobile into the hash table. Overwrites existing
-	 * Automobiles
-	 * with the same Make, Model, and Year.
-	 * @return the key in the hash table **/
+
 	public String insertOverwrite(Automobile automobileObject) throws AutoException {
 		/* key = Make-Model-Year */
 		String automobileKey = null;
@@ -77,16 +65,11 @@ public class AutomobileTable implements Serializable {
 		return automobileKey;
 	}
 
-	/** Inserts an automobile into the hash table. If an automobile with the
-	 * same
-	 * key exists then the exception fixString() method is used to correct it.
-	 * @return the key in the hash table **/
+	
 	public String insertWrapper(Automobile automobileObject) throws AutoException {
-		/* key = Make-Model-Year */
 		int tryNumber = 1;
 		String automobileKey = null;
 		automobileKey = getKey(automobileObject);
-		// self-healing
 		while (tryNumber > 0) {
 			try {
 				insert(automobileKey, automobileObject);
@@ -114,7 +97,6 @@ public class AutomobileTable implements Serializable {
 		return returnValue;
 	}
 
-	/* print() and toString() */
 	public void print() {
 		System.out.print(toString());
 	}
